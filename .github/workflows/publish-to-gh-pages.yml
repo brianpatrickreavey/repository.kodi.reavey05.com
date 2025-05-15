@@ -1,0 +1,37 @@
+name: build-and-upload-to-gh-pages
+# This workflow builds the Kodi plugin and uploads it to the gh-pages branch
+# of the repository. It is triggered on pushes to the main branch.
+# It uses the actions/checkout action to check out the repository, and the
+# peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages
+# branch.
+
+on:
+  push:
+    branches:
+      - main
+      - scaffolding #remove this once its working
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout KODI Repo Generator
+        uses: actions/checkout@v4
+        with:
+          repository: chadparry/kodi-repository.chad.parry.org
+          ref: master
+          path: kodi-repository-generator
+
+      - name: Copy needed file
+        run: cp kodi-repository-generator/tools/create_repository.py ./
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
