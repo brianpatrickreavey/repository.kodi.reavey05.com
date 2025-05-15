@@ -29,6 +29,16 @@ jobs:
       - name: Copy needed file
         run: cp kodi-repository-generator/tools/create_repository.py ./
 
+      - name: Generate Repository
+          
+        run: |
+          python3 create_repository.py \
+            --datadir=./repository.kodi.reavey05.com \
+            --compressed \
+            repository.kodi.reavey05.com \
+            https://github.com/brianpatrickreavey/angelstudios-kodi.git:repo/plugin.video.angelstudios
+
+
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
