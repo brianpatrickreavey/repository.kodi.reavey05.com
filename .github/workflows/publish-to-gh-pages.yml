@@ -8,8 +8,7 @@ name: build-and-upload-to-gh-pages
 on:
   push:
     branches:
-      - main
-      - scaffolding #remove this once its working
+      - main #TODO consider changing this to a tag push or provide a way to trigger this on a dev branch
 
 jobs:
   build-and-upload:
