@@ -42,7 +42,12 @@ jobs:
             --compressed \
             repository.kodi.reavey05.com \
             https://github.com/brianpatrickreavey/angelstudios-kodi.git:repo/plugin.video.angelstudios
+
             
+      - name: Generate index.html
+        run: |
+          python3 generate_index.py
+
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
