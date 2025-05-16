@@ -24,7 +24,7 @@ for dir in sorted(os.listdir('gh-pages')):
             if file.endswith('.zip'):
                 # Relative path from 'gh-pages' directory
                 rel_path = f"{dir}/{file}"
-                html += f'<li><a href="{rel_path}">{rel_path}</a></li>'
+                html += f'<li><a href="https://{rel_path}">{rel_path}</a></li>'
         html += '</ul>'
 
 html += '''
