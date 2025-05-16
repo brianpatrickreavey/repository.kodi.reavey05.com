@@ -7,28 +7,25 @@ html = '''
 <head>
   <meta charset="UTF-8">
   <title>KODI Addons @ reavey05.com</title>
-  <style>
-    body { font-family: sans-serif; margin: 2em; }
-    h1 { font-size: 1.5em; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 0.5em 0; }
-    a { text-decoration: none; color: #0366d6; }
-    a:hover { text-decoration: underline; }
-  </style>
 </head>
 <body>
   <h1>Addons:</h1>'''
 
 # for each directory in the current directory listing
-for dir in sorted(os.listdir('.')):
-    if os.path.isdir(dir):
+
+# if gh-pages exists
+if not os.path.exists('gh-pages'):
+    exit(1)
+for dir in sorted(os.listdir('gh-pages')):
+    dir_path = os.path.join('gh-pages', dir)
+    if os.path.isdir(dir_path) and not dir.startswith('.'):
         html += f'<h2>{dir}</h2><ul>'
-        # for each file in the directory
-        for file in sorted(os.listdir(dir)):
-            # if the file is a .zip file
+        for file in sorted(os.listdir(dir_path)):
+            file_path = os.path.join(dir_path, file)
             if file.endswith('.zip'):
-                # add a link to the file
-                html += f'<li><a href="{dir}/{file}">{file}</a></li>'
+                # Relative path from 'gh-pages' directory
+                rel_path = f"{dir}/{file}"
+                html += f'<li><a href="{rel_path}">{rel_path}</a></li>'
         html += '</ul>'
 
 html += '''
