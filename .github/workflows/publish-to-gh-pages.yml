@@ -27,7 +27,7 @@ jobs:
           path: kodi-repository-generator
 
       - name: Copy needed file
-        run: cp kodi-repository-generator/tools/create_repository.py ./
+        run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
         run: |
@@ -37,7 +37,7 @@ jobs:
 
       - name: Generate Repository
         run: |
-          python3 create_repository.py \
+          python3 ./tools/create_repository.py \
             --datadir=./gh-pages \
             --compressed \
             repository.kodi.reavey05.com \
@@ -46,7 +46,7 @@ jobs:
             
       - name: Generate index.html
         run: |
-          python3 generate_index.py
+          python3 ./tools/generate_index.py
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

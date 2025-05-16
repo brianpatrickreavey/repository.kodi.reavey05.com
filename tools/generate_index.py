@@ -1,21 +1,20 @@
 import os
 
-
 html = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>KODI Addons @ reavey05.com</title>
+  <title>KODI Addons @ repository.kodi.reavey05.com</title>
 </head>
 <body>
-  <h1>Addons:</h1>'''
+  <h1>KODI Addons @ repository.kodi.reavey05.com</h1>'''
 
-# for each directory in the current directory listing
 
 # if gh-pages exists
 if not os.path.exists('gh-pages'):
     exit(1)
+# for each directory in the gh-pages
 for dir in sorted(os.listdir('gh-pages')):
     dir_path = os.path.join('gh-pages', dir)
     if os.path.isdir(dir_path) and not dir.startswith('.'):
