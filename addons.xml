@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.1" provider-name="Brian Reavey">
+
+    <extension point="xbmc.addon.repository">
+    <dir>
+        <info>https://repository.kodi.reavey05.com/addons.xml</info>
+        <checksum>https://erepository.kodi.reavey05.com/addons.xml.md5</checksum>
+        <datadir>https://repository.kodi.reavey05.com/</datadir>
+        <hashes>md5</hashes>
+    </dir>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <summary>KODI Repository @ reavey05.com</summary>
+        <description>A repository of add-ons developed for a personal Kodi system</description>
+        <disclaimer />
+        <news>0.1.1
+- Updating to new schema</news>
+        <platform>all</platform>
+        <language />
+        <license>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</license>
+        <website>https://repository.kodi.reavey05.com/</website>
+        <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
+        <email>brian at reavey05 dot com</email>
+    </extension>
+</addon><addon id="plugin.video.angelstudios" version="0.0.5" name="Angel Studios" provider-name="Brian and Peter Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.beautifulsoup4" version="4.12.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Angel Studios</summary>
+    <description lang="en_GB">An app providing the Angel Studios content. CURENTLY IN DEVELOPMENT.</description>
+    <disclaimer lang="en_GB">Unathorized.  Please visit Angel Studios Website https://www.angel.com/</disclaimer>
+    <license>GPL-3.0-only	</license>
+    <assets>
+      <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
+      <fanart>resources/images/icons/Angel_Studios_Fanart.webp</fanart>
+      <screenshot>resources/images/posters/Screenshot_1.png</screenshot>
+      <screenshot>resources/images/posters/Screenshot_2.png</screenshot>
+    </assets>
+    <news>Updated with latest artwork metadata</news>
+  </extension>
+</addon></addons>
