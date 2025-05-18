@@ -4,9 +4,9 @@
     <extension point="xbmc.addon.repository">
     <dir>
         <info>https://repository.kodi.reavey05.com/addons.xml</info>
-        <checksum>https://erepository.kodi.reavey05.com/addons.xml.md5</checksum>
+        <checksum>https://erepository.kodi.reavey05.com/addons.xml.sha256</checksum>
         <datadir>https://repository.kodi.reavey05.com/</datadir>
-        <hashes>md5</hashes>
+        <hashes>sha256</hashes>
     </dir>
     </extension>
 
