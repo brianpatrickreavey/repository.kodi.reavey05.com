@@ -17,15 +17,18 @@ if not os.path.exists('gh-pages'):
 # for each directory in the gh-pages
 for dir in sorted(os.listdir('gh-pages')):
     dir_path = os.path.join('gh-pages', dir)
+    print(f"{dir_path=}")
     if os.path.isdir(dir_path) and not dir.startswith('.'):
-        html += f'<h2>{dir}</h2><ul>'
+        html += f'  <h2>{dir}</h2>\n  <ul>\n'
         for file in sorted(os.listdir(dir_path)):
             file_path = os.path.join(dir_path, file)
+            print(f"{file_path=}")
             if file.endswith('.zip'):
+                print(f"Found zip file: {file_path}")
                 # Relative path from 'gh-pages' directory
                 rel_path = f"{dir}/{file}"
-                html += f'<li><a href="https://{rel_path}">{rel_path}</a></li>'
-        html += '</ul>'
+                html += f'    <li><a href="https://repository.kodi.reavey05.com/{rel_path}">{file}</a></li>\n'
+        html += '   </ul>\n'
 
 html += '''
 </body>
