@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.1" provider-name="Brian Reavey">
+<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.2" provider-name="Brian Reavey">
 
     <extension point="xbmc.addon.repository">
     <dir>
         <info>https://repository.kodi.reavey05.com/addons.xml</info>
-        <checksum>https://erepository.kodi.reavey05.com/addons.xml.sha256</checksum>
+        <checksum>https://repository.kodi.reavey05.com/addons.xml.sha256</checksum>
         <datadir>https://repository.kodi.reavey05.com/</datadir>
         <hashes>sha256</hashes>
     </dir>
