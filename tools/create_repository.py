@@ -146,19 +146,19 @@ def parse_metadata(metadata_file):
 
 
 def generate_checksum(archive_path, is_binary=True, checksum_path_opt=None):
-    checksum_path = ('{}.md5'.format(archive_path)
+    checksum_path = ('{}.sha256'.format(archive_path)
                      if checksum_path_opt is None else checksum_path_opt)
     checksum_dirname = os.path.dirname(checksum_path)
     archive_relpath = os.path.relpath(archive_path, checksum_dirname)
 
-    checksum = hashlib.md5()
+    checksum = hashlib.sha256()
     with open(archive_path, 'rb') as archive_contents:
         for chunk in iter(lambda: archive_contents.read(2**12), b''):
             checksum.update(chunk)
     digest = checksum.hexdigest()
 
     binary_marker = '*' if is_binary else ' '
-    # Force a UNIX line ending, like the md5sum utility.
+    # Force a UNIX line ending, like the sha256sum utility.
     with io.open(checksum_path, 'w', newline='\n') as sig:
         sig.write(u'{} {}{}\n'.format(digest, binary_marker, archive_relpath))
 
@@ -419,7 +419,7 @@ def main():
     parser.add_argument(
         '--checksum',
         '-c',
-        help='Path for the addons.xml.md5 file [INFO.md5]')
+        help='Path for the addons.xml.sha256 file [INFO.sha256]')
     parser.add_argument(
         '--compressed',
         '-z',
@@ -451,7 +451,7 @@ def main():
         info_path = os.path.expanduser(args.info)
     checksum_path = (
         os.path.expanduser(args.checksum) if args.checksum is not None
-        else '{}.md5'.format(info_path))
+        else '{}.sha256'.format(info_path))
     create_repository(
         args.addon,
         data_path,

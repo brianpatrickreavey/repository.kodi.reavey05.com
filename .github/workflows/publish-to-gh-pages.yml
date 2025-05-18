@@ -19,15 +19,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Checkout KODI Repo Generator
-        uses: actions/checkout@v4
-        with:
-          repository: chadparry/kodi-repository.chad.parry.org
-          ref: master
-          path: kodi-repository-generator
+      # - name: Checkout KODI Repo Generator
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: chadparry/kodi-repository.chad.parry.org
+      #     ref: master
+      #     path: kodi-repository-generator
 
-      - name: Copy needed file
-        run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
+      # - name: Copy needed file
+      #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
         run: |
