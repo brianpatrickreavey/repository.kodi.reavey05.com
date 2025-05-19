@@ -23,7 +23,7 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
-</addon><addon id="plugin.video.angelstudios" version="0.0.5" name="Angel Studios" provider-name="Brian and Peter Reavey">
+</addon><addon id="plugin.video.angelstudios" version="0.0.6" name="Angel Studios" provider-name="Brian and Peter Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.beautifulsoup4" version="4.12.2" />
