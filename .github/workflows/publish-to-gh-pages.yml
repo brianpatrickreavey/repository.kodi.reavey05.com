@@ -1,0 +1,63 @@
+name: build-and-upload-to-gh-pages
+# This workflow builds the Kodi plugin and uploads it to the gh-pages branch
+# of the repository. It is triggered on pushes to the main branch.
+# It uses the actions/checkout action to check out the repository, and the
+# peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages
+# branch.
+
+on:
+  push:
+    branches:
+      - main #TODO consider changing this to a tag push or provide a way to trigger this on a dev branch
+      - scaffolding # temporary branch for testing
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to publish'
+        required: false
+        default: 'main'
+
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # - name: Checkout KODI Repo Generator
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: chadparry/kodi-repository.chad.parry.org
+      #     ref: master
+      #     path: kodi-repository-generator
+
+      # - name: Copy needed file
+      #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install gitpython
+
+      - name: Generate Repository
+        run: |
+          python3 ./tools/create_repository.py \
+            --datadir=./gh-pages \
+            repository.kodi.reavey05.com \
+            https://github.com/brianpatrickreavey/angelstudios-kodi.git:repo/plugin.video.angelstudios
+
+            
+      - name: Generate index.html
+        run: |
+          python3 ./tools/generate_index.py
+
+      - name: Publish to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages
+          cname: repository.kodi.reavey05.com
