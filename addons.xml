@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.2" provider-name="Brian Reavey">
+<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.3" provider-name="Brian Reavey">
 
     <extension point="xbmc.addon.repository">
     <dir>
