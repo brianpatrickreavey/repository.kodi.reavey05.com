@@ -10,6 +10,13 @@ on:
     branches:
       - main #TODO consider changing this to a tag push or provide a way to trigger this on a dev branch
       - scaffolding # temporary branch for testing
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to publish'
+        required: false
+        default: 'main'
+
 
 jobs:
   build-and-upload:
