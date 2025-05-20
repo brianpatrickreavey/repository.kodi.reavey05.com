@@ -1,22 +1,15 @@
 name: build-and-upload-to-gh-pages
 # This workflow builds the Kodi plugin and uploads it to the gh-pages branch
-# of the repository. It is triggered on pushes to the main branch.
+# of the repository. It is triggered on pushes to the main and develop branches.
 # It uses the actions/checkout action to check out the repository, and the
-# peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages
-# branch.
+# peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages branch.
 
 on:
   push:
     branches:
-      - main #TODO consider changing this to a tag push or provide a way to trigger this on a dev branch
-      - scaffolding # temporary branch for testing
+      - main
+      - develop
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to publish'
-        required: false
-        default: 'main'
-
 
 jobs:
   build-and-upload:
@@ -26,6 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Uncomment when the KODI Repo Generator gets updated
       # - name: Checkout KODI Repo Generator
       #   uses: actions/checkout@v4
       #   with:
@@ -37,21 +31,7 @@ jobs:
       #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip3 install gitpython
-
-      - name: Generate Repository
-        run: |
-          python3 ./tools/create_repository.py \
-            --datadir=./gh-pages \
-            repository.kodi.reavey05.com \
-            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
-
-      - name: Generate index.html
-        run: |
-          python3 ./tools/generate_index.py
+        run: pip3 install gitpython
 
       - name: Set publish directory
         id: setdir
@@ -61,6 +41,21 @@ jobs:
           else
             echo "publish_dir=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
           fi
+
+      - name: Generate Repository
+        run: |
+          python3 ./tools/create_repository.py \
+            --datadir=${{ steps.setdir.outputs.publish_dir }} \
+            repository.kodi.reavey05.com \
+            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
+
+      - name: Generate index.html
+        run: python3 ./tools/generate_index.py ${{ steps.setdir.outputs.publish_dir }}
+
+      - name: List contents of publish directory
+        run: |
+          echo "Contents of ${{ steps.setdir.outputs.publish_dir }} directory:"
+          find ${{ steps.setdir.outputs.publish_dir }}
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
