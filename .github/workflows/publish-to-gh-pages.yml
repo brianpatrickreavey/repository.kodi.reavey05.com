@@ -8,15 +8,9 @@ name: build-and-upload-to-gh-pages
 on:
   push:
     branches:
-      - main #TODO consider changing this to a tag push or provide a way to trigger this on a dev branch
-      - scaffolding # temporary branch for testing
+      - main
+      - develop
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to publish'
-        required: false
-        default: 'main'
-
 
 jobs:
   build-and-upload:
@@ -38,8 +32,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
           pip3 install gitpython
 
       - name: Generate Repository
