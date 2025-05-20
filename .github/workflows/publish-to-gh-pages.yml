@@ -37,12 +37,12 @@ jobs:
         id: setenv        
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
-            echo "publish_dir=./gh-pages" >> $GITHUB_OUTPUT
+            echo "PUBLISH_DIR=./gh-pages" >> $GITHUB_OUTPUT
             echo "INFO_URL=https://repository.kodi.reavey05.com/addons.xml" >> $GITHUB_OUTPUT
             echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/addons.xml.sha256" >> $GITHUB_OUTPUT
             echo "DATADIR_URL=https://repository.kodi.reavey05.com/" >> $GITHUB_OUTPUT
           else
-            echo "publish_dir=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+            echo "PUBLISH_DIR=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
             echo "INFO_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/addons.xml" >> $GITHUB_OUTPUT
             echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/addons.xml.sha256" >> $GITHUB_OUTPUT
             echo "DATADIR_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/" >> $GITHUB_OUTPUT
@@ -51,17 +51,17 @@ jobs:
       - name: Generate Repository
         run: |
           python3 ./tools/create_repository.py \
-            --datadir=${{ steps.setenv.outputs.publish_dir }} \
+            --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
             repository.kodi.reavey05.com \
             https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git#${{ github.ref_name }}
 
       - name: Generate index.html
-        run: python3 ./tools/generate_index.py ${{ steps.setenv.outputs.publish_dir }}
+        run: python3 ./tools/generate_index.py ${{ steps.setenv.outputs.PUBLISH_DIR }}
 
       - name: List contents of publish directory
         run: |
-          echo "Contents of ${{ steps.setenv.outputs.publish_dir }} directory:"
-          find ${{ steps.setenv.outputs.publish_dir }}
+          echo "Contents of ${{ steps.setenv.outputs.PUBLISH_DIR }} directory:"
+          find ${{ steps.setenv.outputs.PUBLISH_DIR }}
 
       - name: Substitute variables in addon.xml
         run: |
