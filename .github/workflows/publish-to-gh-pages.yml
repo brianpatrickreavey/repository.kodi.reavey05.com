@@ -47,7 +47,7 @@ jobs:
           python3 ./tools/create_repository.py \
             --datadir=${{ steps.setdir.outputs.publish_dir }} \
             repository.kodi.reavey05.com \
-            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git#branch-${GITHUB_REF##*/}
+            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git#${{ github.ref_name }}
 
       - name: Generate index.html
         run: python3 ./tools/generate_index.py ${{ steps.setdir.outputs.publish_dir }}
