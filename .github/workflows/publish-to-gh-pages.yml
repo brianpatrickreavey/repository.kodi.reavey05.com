@@ -50,7 +50,7 @@ jobs:
             https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
 
       - name: Generate index.html
-        run: python3 ./tools/generate_index.py
+        run: python3 ./tools/generate_index.py ${{ steps.setdir.outputs.publish_dir }}
 
       - name: List contents of publish directory
         run: |
