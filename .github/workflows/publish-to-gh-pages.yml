@@ -36,8 +36,13 @@ jobs:
 
       - name: Generate Repository
         run: |
+          if [ "${GITHUB_REF##*/}" = "main" ]; then
+            DATADIR=./gh-pages
+          else
+            DATADIR=./gh-pages/${GITHUB_REF##*/} \
+          fi
           python3 ./tools/create_repository.py \
-            --datadir=./gh-pages \
+            --datadir=./$DATADIR \
             repository.kodi.reavey05.com \
             https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
 
@@ -58,7 +63,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ steps.setdir.outputs.publish_dir }}
+          publish_dir: gh-pages
           publish_branch: gh-pages
           cname: repository.kodi.reavey05.com
           keep_files: true
