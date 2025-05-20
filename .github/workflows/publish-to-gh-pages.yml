@@ -66,9 +66,9 @@ jobs:
       - name: Substitute variables in addon.xml
         run: |
           sed -i \
-            -e "s|{{INFO_URL}}|${INFO_URL}|g" \
-            -e "s|{{CHECKSUM_URL}}|${CHECKSUM_URL}|g" \
-            -e "s|{{DATADIR_URL}}|${DATADIR_URL}|g" \
+            -e "s|{{INFO_URL}}|${{ steps.setenv.outputs.INFO_URL }}|g" \
+            -e "s|{{CHECKSUM_URL}}|${{ steps.setenv.outputs.CHECKSUM_URL }}|g" \
+            -e "s|{{DATADIR_URL}}|${{ steps.setenv.outputs.DATADIR_URL }}|g" \
             repository.kodi.reavey05.com/addon.xml
         env:
           INFO_URL: ${{ steps.setenv.outputs.INFO_URL }}
