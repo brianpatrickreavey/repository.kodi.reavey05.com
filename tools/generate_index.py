@@ -2,6 +2,7 @@ import os
 import sys
 
 publish_dir = sys.argv[1] if len(sys.argv) > 1 else 'gh-pages'
+print(f"Using publish_dir: {publish_dir}")
 
 html = '''
 <!DOCTYPE html>
