@@ -39,7 +39,7 @@ jobs:
           if [ "${GITHUB_REF##*/}" = "main" ]; then
             DATADIR=./gh-pages
           else
-            DATADIR=./gh-pages/${GITHUB_REF##*/} \
+            DATADIR=./gh-pages/${GITHUB_REF##*/}
           fi
           python3 ./tools/create_repository.py \
             --datadir=./$DATADIR \
