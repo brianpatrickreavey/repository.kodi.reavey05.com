@@ -6,9 +6,9 @@
 
     <extension point="xbmc.addon.repository">
     <dir>
-        <info>{{INFO_URL}}</info>
-        <checksum>{{CHECKSUM_URL}}</checksum>
-        <datadir>{{DATADIR_URL}}</datadir>
+        <info>https://repository.kodi.reavey05.com/develop/addons.xml</info>
+        <checksum>https://repository.kodi.reavey05.com/develop/addons.xml.sha256</checksum>
+        <datadir>https://repository.kodi.reavey05.com/develop/</datadir>
         <hashes>sha256</hashes>
     </dir>
     </extension>
@@ -21,7 +21,7 @@
         <platform>all</platform>
         <language></language>
         <license>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</license>
-        <website>{{DATADIR_URL}}</website>
+        <website>https://repository.kodi.reavey05.com/develop/</website>
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
