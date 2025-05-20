@@ -361,7 +361,7 @@ def create_repository(
     # Create the target folder.
     target_folder = os.path.realpath(data_path)
     if not os.path.isdir(target_folder):
-        os.mmakedirs(target_folder, exist_ok=True)
+        os.makedirs(target_folder, exist_ok=True)
 
     if no_parallel or len(addon_locations) <= 1:
         metadata = [
