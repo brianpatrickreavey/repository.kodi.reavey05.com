@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="repository.kodi.reavey05.com"
         name="KODI Repository @ reavey05.com"
-        version="0.1.4"
+        version="0.1.5"
         provider-name="Brian Reavey">
 
     <extension point="xbmc.addon.repository">
     <dir>
-        <info>https://repository.kodi.reavey05.com/addons.xml</info>
-        <checksum>https://repository.kodi.reavey05.com/addons.xml.sha256</checksum>
-        <datadir>https://repository.kodi.reavey05.com/</datadir>
+        <info>{{INFO_URL}}</info>
+        <checksum>{{CHECKSUM_URL}}</checksum>
+        <datadir>{{DATADIR_URL}}</datadir>
         <hashes>sha256</hashes>
     </dir>
     </extension>
@@ -17,11 +17,11 @@
         <summary>KODI Repository @ reavey05.com</summary>
         <description>A repository of add-ons developed for a personal Kodi system</description>
         <disclaimer></disclaimer>
-        <news>0.1.4 - Updating references to the Angel Studios Addon</news>
+        <news>0.1.5 - Working on a separate install path for branches</news>
         <platform>all</platform>
         <language></language>
         <license>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</license>
-        <website>https://repository.kodi.reavey05.com/</website>
+        <website>{{DATADIR_URL}}</website>
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
