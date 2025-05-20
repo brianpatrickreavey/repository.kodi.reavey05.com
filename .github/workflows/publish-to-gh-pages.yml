@@ -54,10 +54,19 @@ jobs:
         run: |
           python3 ./tools/generate_index.py
 
+      - name: Set publish directory
+        id: setdir
+        run: |
+          if [ "${GITHUB_REF##*/}" = "main" ]; then
+            echo "publish_dir=./gh-pages" >> $GITHUB_OUTPUT
+          else
+            echo "publish_dir=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages
+          publish_dir: ${{ steps.setdir.outputs.publish_dir }}
           publish_branch: gh-pages
           cname: repository.kodi.reavey05.com
