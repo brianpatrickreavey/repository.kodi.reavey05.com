@@ -238,7 +238,7 @@ def fetch_addon_from_folder(raw_addon_location, target_folder):
 
     # Create the compressed add-on archive.
     if not os.path.isdir(addon_target_folder):
-        os.mkdir(addon_target_folder)
+        os.makedirs(addon_target_folder, exist_ok=True)
     archive_path = os.path.join(
         addon_target_folder, get_archive_basename(addon_metadata))
     with zipfile.ZipFile(
@@ -289,7 +289,7 @@ def fetch_addon_from_zip(raw_addon_location, target_folder):
 
         # Copy the metadata files.
         if not os.path.isdir(addon_target_folder):
-            os.mkdir(addon_target_folder)
+            os.mmakedirs(addon_target_folder, exist_ok=True)
         for (source_basename, target_basename) in get_metadata_basenames(
                 addon_metadata):
             try:
@@ -361,7 +361,7 @@ def create_repository(
     # Create the target folder.
     target_folder = os.path.realpath(data_path)
     if not os.path.isdir(target_folder):
-        os.mkdir(target_folder)
+        os.mmakedirs(target_folder, exist_ok=True)
 
     if no_parallel or len(addon_locations) <= 1:
         metadata = [
