@@ -48,6 +48,18 @@ jobs:
             echo "DATADIR_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/" >> $GITHUB_OUTPUT
           fi
 
+      - name: Substitute variables in addon.xml
+        run: |
+          sed -i \
+            -e "s|{{INFO_URL}}|${{ steps.setenv.outputs.INFO_URL }}|g" \
+            -e "s|{{CHECKSUM_URL}}|${{ steps.setenv.outputs.CHECKSUM_URL }}|g" \
+            -e "s|{{DATADIR_URL}}|${{ steps.setenv.outputs.DATADIR_URL }}|g" \
+            repository.kodi.reavey05.com/addon.xml
+        env:
+          INFO_URL: ${{ steps.setenv.outputs.INFO_URL }}
+          CHECKSUM_URL: ${{ steps.setenv.outputs.CHECKSUM_URL }}
+          DATADIR_URL: ${{ steps.setenv.outputs.DATADIR_URL }}
+
       - name: Generate Repository
         run: |
           python3 ./tools/create_repository.py \
@@ -62,18 +74,6 @@ jobs:
         run: |
           echo "Contents of ${{ steps.setenv.outputs.PUBLISH_DIR }} directory:"
           find ${{ steps.setenv.outputs.PUBLISH_DIR }}
-
-      - name: Substitute variables in addon.xml
-        run: |
-          sed -i \
-            -e "s|{{INFO_URL}}|${{ steps.setenv.outputs.INFO_URL }}|g" \
-            -e "s|{{CHECKSUM_URL}}|${{ steps.setenv.outputs.CHECKSUM_URL }}|g" \
-            -e "s|{{DATADIR_URL}}|${{ steps.setenv.outputs.DATADIR_URL }}|g" \
-            repository.kodi.reavey05.com/addon.xml
-        env:
-          INFO_URL: ${{ steps.setenv.outputs.INFO_URL }}
-          CHECKSUM_URL: ${{ steps.setenv.outputs.CHECKSUM_URL }}
-          DATADIR_URL: ${{ steps.setenv.outputs.DATADIR_URL }}
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
