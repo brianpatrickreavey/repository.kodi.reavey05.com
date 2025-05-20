@@ -23,6 +23,7 @@ html = f'''
 # if publish_dir exists
 if not os.path.exists(publish_dir):
     exit(1)
+
 # for each directory in the publish_dir
 for dir in sorted(os.listdir(publish_dir)):
     dir_path = os.path.join(publish_dir, dir)
@@ -35,10 +36,11 @@ for dir in sorted(os.listdir(publish_dir)):
             if file.endswith('.zip'):
                 print(f"Found zip file: {file_path}")
                 # Relative path from publish_dir directory
-                rel_path = f"{dir}/{file}"
-                html += f'    <li><a href="https://repository.kodi.reavey05.com/{rel_path}">{file}</a></li>\n'
+                rel_path = file_path.removeprefix("./gh-pages/")
+                print(f"Relative path: {rel_path}")
+                url = f"https://repository.kodi.reavey05.com/{rel_path}"
+                html += f'    <li><a href="{url}">{file}</a></li>\n'
         html += '   </ul>\n'
-
 
 html += '''
 </body>
