@@ -1,9 +1,8 @@
 name: build-and-upload-to-gh-pages
 # This workflow builds the Kodi plugin and uploads it to the gh-pages branch
-# of the repository. It is triggered on pushes to the main branch.
+# of the repository. It is triggered on pushes to the main and develop branches.
 # It uses the actions/checkout action to check out the repository, and the
-# peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages
-# branch.
+# peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages branch.
 
 on:
   push:
@@ -20,6 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Uncomment when the KODI Repo Generator gets updated
       # - name: Checkout KODI Repo Generator
       #   uses: actions/checkout@v4
       #   with:
@@ -31,9 +31,7 @@ jobs:
       #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
-        run: |
-          pip3 install gitpython
-
+        run: pip3 install gitpython
 
       - name: Set publish directory
         id: setdir
@@ -52,19 +50,18 @@ jobs:
             https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
 
       - name: Generate index.html
-        run: |
-          python3 ./tools/generate_index.py
+        run: python3 ./tools/generate_index.py
 
-      - name: List contents of gh-pages
+      - name: List contents of publish directory
         run: |
           echo "Contents of ${{ steps.setdir.outputs.publish_dir }} directory:"
-          ls -la ${{ steps.setdir.outputs.publish_dir }}     
-      
+          find ${{ steps.setdir.outputs.publish_dir }}
+
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: gh-pages
+          publish_dir: ${{ steps.setdir.outputs.publish_dir }}
           publish_branch: gh-pages
           cname: repository.kodi.reavey05.com
           keep_files: true
