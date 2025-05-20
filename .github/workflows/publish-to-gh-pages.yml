@@ -47,7 +47,7 @@ jobs:
           python3 ./tools/create_repository.py \
             --datadir=./gh-pages \
             repository.kodi.reavey05.com \
-            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:/
+            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
 
             
       - name: Generate index.html
