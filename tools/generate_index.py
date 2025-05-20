@@ -1,10 +1,13 @@
 import os
 import sys
+from datetime import datetime, timezone
 
 publish_dir = sys.argv[1] if len(sys.argv) > 1 else 'gh-pages'
 print(f"Using publish_dir: {publish_dir}")
 
-html = '''
+datestamp = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+
+html = f'''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,9 @@ html = '''
   <title>KODI Addons @ repository.kodi.reavey05.com</title>
 </head>
 <body>
-  <h1>KODI Addons @ repository.kodi.reavey05.com</h1>'''
+  <h1>KODI Addons @ repository.kodi.reavey05.com</h1>
+  <p><em>Generated: {datestamp}</em></p>
+'''
 
 
 # if publish_dir exists
@@ -33,6 +38,7 @@ for dir in sorted(os.listdir(publish_dir)):
                 rel_path = f"{dir}/{file}"
                 html += f'    <li><a href="https://repository.kodi.reavey05.com/{rel_path}">{file}</a></li>\n'
         html += '   </ul>\n'
+
 
 html += '''
 </body>
