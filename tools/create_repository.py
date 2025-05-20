@@ -289,7 +289,7 @@ def fetch_addon_from_zip(raw_addon_location, target_folder):
 
         # Copy the metadata files.
         if not os.path.isdir(addon_target_folder):
-            os.mmakedirs(addon_target_folder, exist_ok=True)
+            os.makedirs(addon_target_folder, exist_ok=True)
         for (source_basename, target_basename) in get_metadata_basenames(
                 addon_metadata):
             try:
