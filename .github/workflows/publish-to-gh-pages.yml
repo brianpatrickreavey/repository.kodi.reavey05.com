@@ -49,7 +49,6 @@ jobs:
             repository.kodi.reavey05.com \
             https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
 
-            
       - name: Generate index.html
         run: |
           python3 ./tools/generate_index.py
