@@ -34,21 +34,6 @@ jobs:
         run: |
           pip3 install gitpython
 
-      - name: Generate Repository
-        run: |
-          if [ "${GITHUB_REF##*/}" = "main" ]; then
-            DATADIR=./gh-pages
-          else
-            DATADIR=./gh-pages/${GITHUB_REF##*/}
-          fi
-          python3 ./tools/create_repository.py \
-            --datadir=./$DATADIR \
-            repository.kodi.reavey05.com \
-            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
-
-      - name: Generate index.html
-        run: |
-          python3 ./tools/generate_index.py
 
       - name: Set publish directory
         id: setdir
@@ -59,6 +44,22 @@ jobs:
             echo "publish_dir=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
           fi
 
+      - name: Generate Repository
+        run: |
+          python3 ./tools/create_repository.py \
+            --datadir=${{ steps.setdir.outputs.publish_dir }} \
+            repository.kodi.reavey05.com \
+            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
+
+      - name: Generate index.html
+        run: |
+          python3 ./tools/generate_index.py
+
+      - name: List contents of gh-pages
+        run: |
+          echo "Contents of ${{ steps.setdir.outputs.publish_dir }} directory:"
+          ls -la ${{ steps.setdir.outputs.publish_dir }}     
+      
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
