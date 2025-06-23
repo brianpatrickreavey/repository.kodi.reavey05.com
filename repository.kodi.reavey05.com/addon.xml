@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="repository.kodi.reavey05.com"
         name="KODI Repository @ reavey05.com"
-        version="0.1.5"
+        version="0.1.6"
         provider-name="Brian Reavey">
 
     <extension point="xbmc.addon.repository">
@@ -17,7 +17,7 @@
         <summary>KODI Repository @ reavey05.com</summary>
         <description>A repository of add-ons developed for a personal Kodi system</description>
         <disclaimer></disclaimer>
-        <news>0.1.5 - Working on a separate install path for branches</news>
+        <news>0.1.6 - Add multi-addon support</news>
         <platform>all</platform>
         <language></language>
         <license>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</license>
