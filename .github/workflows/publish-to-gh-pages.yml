@@ -10,6 +10,8 @@ on:
       - main
       - develop
   workflow_dispatch:
+  repository_dispatch:
+
 
 jobs:
   build-and-upload:
@@ -31,37 +33,61 @@ jobs:
       #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
-        run: pip3 install gitpython
+        run: pip3 install gitpython pyyaml
 
-      - name: Set publish directory
-        id: setdir
+      - name: Set branch-dependent environment variables
+        id: setenv        
         run: |
           if [ "${GITHUB_REF##*/}" = "main" ]; then
-            echo "publish_dir=./gh-pages" >> $GITHUB_OUTPUT
+            echo "PUBLISH_DIR=./gh-pages" >> $GITHUB_OUTPUT
+            echo "INFO_URL=https://repository.kodi.reavey05.com/addons.xml" >> $GITHUB_OUTPUT
+            echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/addons.xml.sha256" >> $GITHUB_OUTPUT
+            echo "DATADIR_URL=https://repository.kodi.reavey05.com/" >> $GITHUB_OUTPUT
           else
-            echo "publish_dir=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+            echo "PUBLISH_DIR=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+            echo "INFO_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/addons.xml" >> $GITHUB_OUTPUT
+            echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/addons.xml.sha256" >> $GITHUB_OUTPUT
+            echo "DATADIR_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/" >> $GITHUB_OUTPUT
           fi
+
+      - name: Substitute variables in addon.xml
+        run: |
+          sed -i \
+            -e "s|{{INFO_URL}}|${{ steps.setenv.outputs.INFO_URL }}|g" \
+            -e "s|{{CHECKSUM_URL}}|${{ steps.setenv.outputs.CHECKSUM_URL }}|g" \
+            -e "s|{{DATADIR_URL}}|${{ steps.setenv.outputs.DATADIR_URL }}|g" \
+            repository.kodi.reavey05.com/addon.xml
+        env:
+          INFO_URL: ${{ steps.setenv.outputs.INFO_URL }}
+          CHECKSUM_URL: ${{ steps.setenv.outputs.CHECKSUM_URL }}
+          DATADIR_URL: ${{ steps.setenv.outputs.DATADIR_URL }}
 
       - name: Generate Repository
         run: |
-          python3 ./tools/create_repository.py \
-            --datadir=${{ steps.setdir.outputs.publish_dir }} \
+          # Parse repositories from config file
+          REPO_URLS=$(python3 ./tools/parse_repositories_config.py repositories-config.yml --branch-override ${{ github.ref_name }})
+          
+          # Run create_repository.py with all repository URLs
+          eval "python3 ./tools/create_repository.py \
+            --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
+
             repository.kodi.reavey05.com \
-            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git:
+            $REPO_URLS"
 
       - name: Generate index.html
-        run: python3 ./tools/generate_index.py ${{ steps.setdir.outputs.publish_dir }}
+        run: python3 ./tools/generate_index.py ${{ steps.setenv.outputs.PUBLISH_DIR }}
 
       - name: List contents of publish directory
         run: |
-          echo "Contents of ${{ steps.setdir.outputs.publish_dir }} directory:"
-          find ${{ steps.setdir.outputs.publish_dir }}
+          echo "Contents of ${{ steps.setenv.outputs.PUBLISH_DIR }} directory:"
+          find ${{ steps.setenv.outputs.PUBLISH_DIR }}
+
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ steps.setdir.outputs.publish_dir }}
+          publish_dir: gh-pages
           publish_branch: gh-pages
           cname: repository.kodi.reavey05.com
           keep_files: true
