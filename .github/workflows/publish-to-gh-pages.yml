@@ -10,6 +10,7 @@ on:
       - main
       - develop
   workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   build-and-upload:
@@ -31,7 +32,7 @@ jobs:
       #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
-        run: pip3 install gitpython
+        run: pip3 install gitpython pyyaml
 
       - name: Set branch-dependent environment variables
         id: setenv        
@@ -62,10 +63,14 @@ jobs:
 
       - name: Generate Repository
         run: |
-          python3 ./tools/create_repository.py \
+          # Parse repositories from config file
+          REPO_URLS=$(python3 ./tools/parse_repositories_config.py repositories-config.yml --branch-override ${{ github.ref_name }})
+          
+          # Run create_repository.py with all repository URLs
+          eval "python3 ./tools/create_repository.py \
             --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
             repository.kodi.reavey05.com \
-            https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git#${{ github.ref_name }}
+            $REPO_URLS"
 
       - name: Generate index.html
         run: python3 ./tools/generate_index.py ${{ steps.setenv.outputs.PUBLISH_DIR }}

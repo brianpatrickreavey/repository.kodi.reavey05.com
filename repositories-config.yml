@@ -1,0 +1,29 @@
+# Configuration file for Kodi repositories to include in the repository
+# Each repository entry should have:
+# - url: Git repository URL
+# - branch: Branch to use (optional, defaults to repository's default branch)
+# - path: Path within the repository to the addon (optional, defaults to root)
+
+repositories:
+  - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git"
+    branch: "main"  # or whatever branch you want to use
+    # path: "."  # optional, defaults to root
+
+  - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.crossfitwod.git"
+    branch: "develop"  # addon files are in develop branch
+    # path: "."  # optional, defaults to root
+
+  - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.wodi.git"
+    branch: "main"  # or whatever branch you want to use
+    # path: "."  # optional, defaults to root
+
+  # Add more repositories here as needed
+  # Example of adding another repository:
+  # - url: "https://github.com/username/another-kodi-addon.git"
+  #   branch: "main"
+  #   path: "addon-folder"  # if the addon is in a subfolder
+  
+  # Example of using default branch:
+  # - url: "https://github.com/username/third-kodi-addon.git"
+  #   # branch will default to repository's default branch
+  #   # path will default to root directory
