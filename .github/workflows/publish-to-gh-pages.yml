@@ -12,6 +12,7 @@ on:
   workflow_dispatch:
   repository_dispatch:
 
+
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
@@ -69,6 +70,7 @@ jobs:
           # Run create_repository.py with all repository URLs
           eval "python3 ./tools/create_repository.py \
             --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
+
             repository.kodi.reavey05.com \
             $REPO_URLS"
 
@@ -79,6 +81,7 @@ jobs:
         run: |
           echo "Contents of ${{ steps.setenv.outputs.PUBLISH_DIR }} directory:"
           find ${{ steps.setenv.outputs.PUBLISH_DIR }}
+
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

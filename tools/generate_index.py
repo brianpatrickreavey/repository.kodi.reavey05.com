@@ -40,6 +40,7 @@ for dir in sorted(os.listdir(publish_dir)):
                 print(f"Relative path: {rel_path}")
                 url = f"https://repository.kodi.reavey05.com/{rel_path}"
                 html += f'    <li><a href="{url}">{file}</a></li>\n'
+
         html += '   </ul>\n'
 
 html += '''
