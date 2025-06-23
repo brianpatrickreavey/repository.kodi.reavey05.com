@@ -70,7 +70,6 @@ jobs:
           # Run create_repository.py with all repository URLs
           eval "python3 ./tools/create_repository.py \
             --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
-
             repository.kodi.reavey05.com \
             $REPO_URLS"
 
