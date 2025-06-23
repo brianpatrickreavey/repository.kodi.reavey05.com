@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.4" provider-name="Brian Reavey">
+<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.5" provider-name="Brian Reavey">
 
     <extension point="xbmc.addon.repository">
     <dir>
@@ -14,7 +14,7 @@
         <summary>KODI Repository @ reavey05.com</summary>
         <description>A repository of add-ons developed for a personal Kodi system</description>
         <disclaimer />
-        <news>0.1.4 - Updating references to the Angel Studios Addon</news>
+        <news>0.1.5 - Working on a separate install path for branches</news>
         <platform>all</platform>
         <language />
         <license>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</license>
@@ -41,5 +41,45 @@
       <fanart>resources/images/fanart/Angel_Studios_Fanart.webp</fanart>
     </assets>
     <news>Major restructuring</news>
+  </extension>
+</addon><addon id="plugin.video.crossfitwod" version="0.0.1" name="Crossfit WOW" provider-name="Brian Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.beautifulsoup4" version="4.12.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Crossfit WOD</summary>
+    <description lang="en_GB">An app providing the daily Crossfit Workout of the Day (WOD). CURENTLY IN DEVELOPMENT.</description>
+    <disclaimer lang="en_GB">Unauthorized.  Please visit Crossfit website.  https://www.crossfit.com/</disclaimer>
+    <license>GPL-3.0-only	</license>
+    <assets>
+      <icon>resources/images/icons/crossfit_logo.png</icon>
+      <fanart>resources/images/fanart/crossfit-wanderlust-group-class.jpg</fanart>
+    </assets>
+    <news>0.0.1 - Initial layout</news>
+  </extension>
+</addon><addon id="plugin.video.wodi" version="0.0.1" name="WODi Application" provider-name="Brian Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.beautifulsoup4" version="4.12.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+  </requires>
+  <extension point="xbmc.python.script" library="main.py">
+      <provides>executable</provides>
+	</extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">WODi</summary>
+    <description lang="en_GB">Run Crossfit WODs from within KODI.</description>
+    <disclaimer lang="en_GB">Unauthorized.  Please visit Crossfit website.  https://www.crossfit.com/</disclaimer>
+    <license>GPL-3.0-only	</license>
+    <assets>
+      <icon>resources/images/icons/crossfit_logo.jpg</icon>
+      <fanart>resources/images/fanart/crossfit-wanderlust-group-class.jpg</fanart>
+    </assets>
+    <news>0.0.1 - Initial development</news>
   </extension>
 </addon></addons>
