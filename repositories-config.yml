@@ -10,7 +10,7 @@ repositories:
     # path: "."  # optional, defaults to root
 
   - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.crossfitwod.git"
-    branch: "develop"  # addon files are in develop branch
+    branch: "main"  # addon files are in develop branch
     # path: "."  # optional, defaults to root
 
   - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.wodi.git"
