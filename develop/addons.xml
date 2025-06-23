@@ -22,7 +22,7 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
-</addon><addon id="plugin.video.angelstudios_development" version="0.1.2" name="Angel Studios" provider-name="Brian Reavey, Peter Reavey">
+</addon><addon id="plugin.video.angelstudios" version="0.0.7" name="Angel Studios" provider-name="Brian and Peter Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.beautifulsoup4" version="4.12.2" />
@@ -34,13 +34,13 @@
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Angel Studios</summary>
     <description lang="en_GB">An app providing the Angel Studios content. CURENTLY IN DEVELOPMENT.</description>
-    <disclaimer lang="en_GB">Unauthorized.  Please visit Angel Studios Website https://www.angel.com/</disclaimer>
+    <disclaimer lang="en_GB">Unathorized.  Please visit Angel Studios Website https://www.angel.com/</disclaimer>
     <license>GPL-3.0-only	</license>
     <assets>
       <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
       <fanart>resources/images/fanart/Angel_Studios_Fanart.webp</fanart>
     </assets>
-    <news>0.1.2 - Session handling is working.  Some cleanup.</news>
+    <news>Major restructuring</news>
   </extension>
 </addon><addon id="plugin.video.crossfitwod" version="0.0.1" name="Crossfit WOW" provider-name="Brian Reavey">
   <requires>
