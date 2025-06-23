@@ -33,7 +33,17 @@ jobs:
       #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
       - name: Install dependencies
-        run: pip3 install gitpython pyyaml
+        run: |
+          pip3 install gitpython pyyaml
+          echo "Checking installed packages:"
+          pip3 list | grep -E "(gitpython|pyyaml|GitPython|PyYAML)"
+          
+      - name: Verify Python modules
+        run: |
+          echo "Testing Python imports..."
+          python3 -c "import git; print('GitPython:', git.__version__)"
+          python3 -c "import yaml; print('PyYAML:', yaml.__version__)"
+          python3 -c "import xml.etree.ElementTree; print('XML ET: OK')"
 
       - name: Set branch-dependent environment variables
         id: setenv        
@@ -64,10 +74,23 @@ jobs:
 
       - name: Generate Repository
         run: |
-          # Parse repositories from config file
-          REPO_URLS=$(python3 ./tools/parse_repositories_config.py repositories-config.yml --branch-override ${{ github.ref_name }})
+          # Debug: Show environment
+          echo "Python version: $(python3 --version)"
+          echo "Working directory: $(pwd)"
+          echo "Available tools:"
+          ls -la tools/
+          
+          # Debug: Test parsing first
+          echo "Testing repository config parsing..."
+          REPO_URLS=$(python3 ./tools/parse_repositories_config.py repositories-config.yml)
+          echo "Generated URLs: $REPO_URLS"
+          
+          # Debug: Test create_repository.py help
+          echo "Testing create_repository.py..."
+          python3 ./tools/create_repository.py --help
           
           # Run create_repository.py with all repository URLs
+          echo "Running repository generation..."
           eval "python3 ./tools/create_repository.py \
             --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
             repository.kodi.reavey05.com \
