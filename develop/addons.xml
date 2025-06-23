@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.5" provider-name="Brian Reavey">
+<addons><addon id="repository.kodi.reavey05.com" name="KODI Repository @ reavey05.com" version="0.1.6" provider-name="Brian Reavey">
 
     <extension point="xbmc.addon.repository">
     <dir>
@@ -14,7 +14,7 @@
         <summary>KODI Repository @ reavey05.com</summary>
         <description>A repository of add-ons developed for a personal Kodi system</description>
         <disclaimer />
-        <news>0.1.5 - Working on a separate install path for branches</news>
+        <news>0.1.6 - Add multi-addon support</news>
         <platform>all</platform>
         <language />
         <license>GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007</license>
@@ -42,7 +42,7 @@
     </assets>
     <news>Major restructuring</news>
   </extension>
-</addon><addon id="plugin.video.crossfitwod" version="0.0.1" name="Crossfit WOW" provider-name="Brian Reavey">
+</addon><addon id="plugin.video.crossfitwod" version="0.0.2" name="Crossfit WOD" provider-name="Brian Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.beautifulsoup4" version="4.12.2" />
@@ -57,10 +57,10 @@
     <disclaimer lang="en_GB">Unauthorized.  Please visit Crossfit website.  https://www.crossfit.com/</disclaimer>
     <license>GPL-3.0-only	</license>
     <assets>
-      <icon>resources/images/icons/crossfit_logo.png</icon>
+      <icon>resources/images/icons/crossfit_logo.jpg</icon>
       <fanart>resources/images/fanart/crossfit-wanderlust-group-class.jpg</fanart>
     </assets>
-    <news>0.0.1 - Initial layout</news>
+    <news>0.0.2 - Initial functionality</news>
   </extension>
 </addon><addon id="plugin.video.wodi" version="0.0.1" name="WODi Application" provider-name="Brian Reavey">
   <requires>
