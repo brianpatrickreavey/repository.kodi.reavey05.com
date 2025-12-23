@@ -1,25 +1,34 @@
-name: build-and-upload-to-gh-pages
+name: publish-addins-to-gh-pages
 # This workflow builds the Kodi plugin and uploads it to the gh-pages branch
 # of the repository. It is triggered on pushes to the main and develop branches.
 # It uses the actions/checkout action to check out the repository, and the
 # peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages branch.
 
 on:
-  push:
-    branches:
-      - main
-      - develop
   workflow_dispatch:
   repository_dispatch:
-
+    types: [addon-release]  # Custom event from addon release workflow
 
 jobs:
-  build-and-upload:
+  publish:
+    name: Publish Addons to GitHub Pages
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Parse repository dispatch payload
+        id: payload
+        run: |
+          if [ "${{ github.event.client_payload.addon }}" ]; then
+          echo "Payload received: ${{ toJson(github.event.client_payload) }}"
+            echo "addon=${{ github.event.client_payload.addon }}" >> $GITHUB_OUTPUT
+            echo "tag=${{ github.event.client_payload.tag }}" >> $GITHUB_OUTPUT
+          else
+            echo "No payload provided, using default config"
+          fi
+
 
       # Uncomment when the KODI Repo Generator gets updated
       # - name: Checkout KODI Repo Generator
@@ -32,12 +41,17 @@ jobs:
       # - name: Copy needed file
       #   run: cp kodi-repository-generator/tools/create_repository.py ./tools/create_repository.py
 
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
       - name: Install dependencies
         run: |
-          pip3 install gitpython pyyaml
+          pip3 install gitpython pyyaml requests
           echo "Checking installed packages:"
           pip3 list | grep -E "(gitpython|pyyaml|GitPython|PyYAML)"
-          
+
       - name: Verify Python modules
         run: |
           echo "Testing Python imports..."
@@ -45,20 +59,14 @@ jobs:
           python3 -c "import yaml; print('PyYAML:', yaml.__version__)"
           python3 -c "import xml.etree.ElementTree; print('XML ET: OK')"
 
-      - name: Set branch-dependent environment variables
-        id: setenv        
+      - name: Set environment variables
+        id: setenv
         run: |
-          if [ "${GITHUB_REF##*/}" = "main" ]; then
-            echo "PUBLISH_DIR=./gh-pages" >> $GITHUB_OUTPUT
-            echo "INFO_URL=https://repository.kodi.reavey05.com/addons.xml" >> $GITHUB_OUTPUT
-            echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/addons.xml.sha256" >> $GITHUB_OUTPUT
-            echo "DATADIR_URL=https://repository.kodi.reavey05.com/" >> $GITHUB_OUTPUT
-          else
-            echo "PUBLISH_DIR=./gh-pages/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
-            echo "INFO_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/addons.xml" >> $GITHUB_OUTPUT
-            echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/addons.xml.sha256" >> $GITHUB_OUTPUT
-            echo "DATADIR_URL=https://repository.kodi.reavey05.com/${GITHUB_REF##*/}/" >> $GITHUB_OUTPUT
-          fi
+          echo "PUBLISH_DIR=./gh-pages" >> $GITHUB_OUTPUT
+          echo "INFO_URL=https://repository.kodi.reavey05.com/addons.xml" >> $GITHUB_OUTPUT
+          echo "CHECKSUM_URL=https://repository.kodi.reavey05.com/addons.xml.sha256" >> $GITHUB_OUTPUT
+          echo "DATADIR_URL=https://repository.kodi.reavey05.com/" >> $GITHUB_OUTPUT
+        # TODO Add handling for beta or other tags later
 
       - name: Substitute variables in addon.xml
         run: |
@@ -67,34 +75,34 @@ jobs:
             -e "s|{{CHECKSUM_URL}}|${{ steps.setenv.outputs.CHECKSUM_URL }}|g" \
             -e "s|{{DATADIR_URL}}|${{ steps.setenv.outputs.DATADIR_URL }}|g" \
             repository.kodi.reavey05.com/addon.xml
-        env:
-          INFO_URL: ${{ steps.setenv.outputs.INFO_URL }}
-          CHECKSUM_URL: ${{ steps.setenv.outputs.CHECKSUM_URL }}
-          DATADIR_URL: ${{ steps.setenv.outputs.DATADIR_URL }}
+
+      - name: Read Repositories Config
+        id: repo-config
+        uses: teunmooij/yaml@v1
+        with:
+          from-file: 'repositories-config.yml'
+
+
+
+      - name: Download Addon ZIPs
+        id: download_addon_zips
+        run: |
+          rm -rf ./addon_zips/
+          export ADDON="${{ steps.payload.outputs.addon }}"
+          export TAG="${{ steps.payload.outputs.tag }}"
+          python3 ./tools/download_addon_zips.py repositories-config.yml
+          zip_paths=$(ls ./addon_zips/*.zip)
+          echo "ZIP_PATHS=$zip_paths" >> $GITHUB_OUTPUT
+          echo "Downloaded addon ZIPs: ${zip_paths}"
 
       - name: Generate Repository
         run: |
-          # Debug: Show environment
-          echo "Python version: $(python3 --version)"
-          echo "Working directory: $(pwd)"
-          echo "Available tools:"
-          ls -la tools/
-          
-          # Debug: Test parsing first
-          echo "Testing repository config parsing..."
-          REPO_URLS=$(python3 ./tools/parse_repositories_config.py repositories-config.yml)
-          echo "Generated URLs: $REPO_URLS"
-          
-          # Debug: Test create_repository.py help
-          echo "Testing create_repository.py..."
-          python3 ./tools/create_repository.py --help
-          
-          # Run create_repository.py with all repository URLs
-          echo "Running repository generation..."
-          eval "python3 ./tools/create_repository.py \
+          echo anything
+          echo ZIP_PATHS=${{ steps.download_addon_zips.outputs.ZIP_PATHS }}
+          python3 ./tools/create_repository.py \
             --datadir=${{ steps.setenv.outputs.PUBLISH_DIR }} \
             repository.kodi.reavey05.com \
-            $REPO_URLS"
+            ${{ steps.download_addon_zips.outputs.ZIP_PATHS }}
 
       - name: Generate index.html
         run: python3 ./tools/generate_index.py ${{ steps.setenv.outputs.PUBLISH_DIR }}
@@ -103,7 +111,6 @@ jobs:
         run: |
           echo "Contents of ${{ steps.setenv.outputs.PUBLISH_DIR }} directory:"
           find ${{ steps.setenv.outputs.PUBLISH_DIR }}
-
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

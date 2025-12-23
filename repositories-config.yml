@@ -1,28 +1,36 @@
 # Configuration file for Kodi repositories to include in the repository
 # Each repository entry should have:
-# - url: Git repository URL
+# - id: Unique identifier for the addon.
+#         This will be sent in the repository dispatch payload.
+#         If not provided, it will be derived from the repository name.
+# - repo: GitHub repository in the format "owner/repo"
+# - url: Git repository URL (fallback if repo is not provided)
 # - branch: Branch to use (optional, defaults to repository's default branch)
 # - path: Path within the repository to the addon (optional, defaults to root)
 
-repositories:
-  - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git"
-    branch: "main"  # or whatever branch you want to use
-    # path: "."  # optional, defaults to root
+addons:
+  plugin.video.angelstudios:
+    repo: "brianpatrickreavey/kodi.plugin.video.angelstudios"
+    url: "https://github.com/brianpatrickreavey/kodi.plugin.video.angelstudios.git"
+    zip_name: "plugin.video.angelstudios"
+    branch: "main"
 
-  - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.crossfitwod.git"
-    branch: "main"  # addon files are in develop branch
-    # path: "."  # optional, defaults to root
+  plugin.video.crossfitwod:
+    repo: "brianpatrickreavey/kodi.plugin.video.crossfitwod"
+    url: "https://github.com/brianpatrickreavey/kodi.plugin.video.crossfitwod.git"
+    branch: "main"
 
-  - url: "https://github.com/brianpatrickreavey/kodi.plugin.video.wodi.git"
-    branch: "main"  # or whatever branch you want to use
-    # path: "."  # optional, defaults to root
+  plugin.video.wodi:
+    repo: "brianpatrickreavey/kodi.plugin.video.wodi"
+    url: "https://github.com/brianpatrickreavey/kodi.plugin.video.wodi.git"
+    branch: "main"
 
   # Add more repositories here as needed
   # Example of adding another repository:
   # - url: "https://github.com/username/another-kodi-addon.git"
   #   branch: "main"
   #   path: "addon-folder"  # if the addon is in a subfolder
-  
+
   # Example of using default branch:
   # - url: "https://github.com/username/third-kodi-addon.git"
   #   # branch will default to repository's default branch

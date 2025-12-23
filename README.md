@@ -12,8 +12,34 @@ Building out the framework to publish to GitHub Pages under repository.kodi.reav
 
 To add a new Kodi add-on to this repository:
 
-1. Edit `repositories-config.yml` 
+1. Edit `repositories-config.yml`
 2. Add your Git repository URL and configuration
 3. Commit and push - the repository will be automatically built and published
 
 See `REPOSITORIES.md` for detailed configuration instructions.
+
+
+
+
+
+# WORKING
+
+Desired workflow:
+
+* publish to feature branch for local testing
+* push to branch for automated testing?
+* merge to develop - should create a release with a `#.#.#-develop` tag
+* merge to main - should create a release with `#.#.#` matching the last tagged
+  develop branch
+
+
+Trunk-based:
+* get rid of `develop`
+* small branch for a feature
+* merge back in (autotag as RC?)
+* tag with release if we're happy with it (???)
+* tagging triggers the publishing workflow
+
+
+
+

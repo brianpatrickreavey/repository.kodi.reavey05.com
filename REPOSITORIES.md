@@ -1,10 +1,12 @@
 # Repository Configuration
 
-This repository now supports publishing multiple Kodi add-ons from different Git repositories using a configuration file approach.
+This repository now supports publishing multiple Kodi add-ons from different
+Git repositories using a configuration file approach.
 
 ## Configuration File
 
-The configuration is defined in `repositories-config.yml`. This file contains a list of Git repositories to include in the Kodi repository.
+The configuration is defined in `repositories-config.yml`. This file contains
+a list of Git repositories to include in the Kodi repository.
 
 ### Format
 
@@ -16,7 +18,7 @@ repositories:
 
   - url: "https://github.com/username/another-addon.git"
     branch: "release"
-    
+
   - url: "https://github.com/username/third-addon.git"
     # uses default branch and root path
 ```
