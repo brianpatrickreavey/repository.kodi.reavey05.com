@@ -22,7 +22,7 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
-</addon><addon id="plugin.video.angelstudios" version="0.3.0" name="Angel Studios">
+</addon><addon id="plugin.video.angelstudios" version="0.3.1" name="Angel Studios">
   <provider-name>Brian Reavey, Peter Reavey</provider-name>
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
@@ -42,6 +42,6 @@
       <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
       <fanart>resources/images/fanart/Angel_Studios_Fanart.webp</fanart>
     </assets>
-    <news>0.3.0 - Unit Test coverage at 100%.  Small tweaks to code as unit tests uncovered minor issues.</news>
+    <news>0.3.1 - Fix unplayable ListItems.  Slight refactor of item creation for consistency.</news>
   </extension>
 </addon></addons>
