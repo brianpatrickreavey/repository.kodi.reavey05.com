@@ -22,7 +22,7 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
-</addon><addon id="plugin.video.angelstudios" version="0.4.0" name="Angel Studios">
+</addon><addon id="plugin.video.angelstudios" version="0.4.1" name="Angel Studios">
   <provider-name>Brian Reavey, Peter Reavey</provider-name>
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
@@ -44,6 +44,6 @@
       <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
       <fanart>resources/images/fanart/Angel_Studios_Fanart.webp</fanart>
     </assets>
-    <news>0.4.0 - Major refactor, menu building, debug and trace settings, etc.</news>
+    <news>0.4.1 - bugfix: erroneous attempt to set duration on unavailable episodes resulted in episode_menu errors.  updated duration logic to be gated by episode availability.</news>
   </extension>
 </addon></addons>
