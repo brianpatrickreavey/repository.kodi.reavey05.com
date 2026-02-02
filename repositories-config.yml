@@ -25,6 +25,11 @@ addons:
     url: "https://github.com/brianpatrickreavey/kodi.plugin.video.wodi.git"
     branch: "main"
 
+  script.module.auth0-ciam-client:
+    repo: "brianpatrickreavey/kodi.script.module.auth0-ciam-client"
+    url: "https://github.com/brianpatrickreavey/kodi.script.module.auth0-ciam-client.git"
+    branch: "main"
+
   # Add more repositories here as needed
   # Example of adding another repository:
   # - url: "https://github.com/username/another-kodi-addon.git"
