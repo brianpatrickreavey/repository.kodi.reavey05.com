@@ -18,16 +18,19 @@ addons:
   plugin.video.crossfitwod:
     repo: "brianpatrickreavey/kodi.plugin.video.crossfitwod"
     url: "https://github.com/brianpatrickreavey/kodi.plugin.video.crossfitwod.git"
+    zip_name: "plugin.video.crossfitwod"
     branch: "main"
 
   plugin.video.wodi:
     repo: "brianpatrickreavey/kodi.plugin.video.wodi"
     url: "https://github.com/brianpatrickreavey/kodi.plugin.video.wodi.git"
+    zip_name: "plugin.video.wodi"
     branch: "main"
 
   script.module.auth0-ciam-client:
     repo: "brianpatrickreavey/kodi.script.module.auth0-ciam-client"
     url: "https://github.com/brianpatrickreavey/kodi.script.module.auth0-ciam-client.git"
+    zip_name: "script.module.auth0-ciam-client"
     branch: "master"
 
   # Add more repositories here as needed
