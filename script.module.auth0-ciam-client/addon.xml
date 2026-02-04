@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<addon id="script.module.auth0-ciam-client" version="0.0.4" name="Auth0 CIAM Client" provider-name="Brian Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.requests" version="2.0.0" />
+    <import addon="script.module.beautifulsoup4" version="4.0.0" />
+  </requires>
+  <extension point="xbmc.python.module" library="resources/lib/" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Auth0 CIAM Client library for Kodi</summary>
+    <description lang="en_GB">Provides authentication functionality for Auth0 CIAM, enabling JWT token retrieval via click-through simulation.</description>
+    <license>GPL-3.0-only</license>
+    <platform>all</platform>
+    <source>https://github.com/brianpatrickreavey/kodi.script.module.auth0-ciam-client</source>
+    <news>0.0.1 - Initial release bundling auth0_ciam_client library.</news>
+  </extension>
+</addon>
