@@ -5,6 +5,8 @@ name: publish-addins-to-gh-pages
 # peaceiris/actions-gh-pages action to publish the built plugin to the gh-pages branch.
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
   repository_dispatch:
     types: [addon-release]  # Custom event from addon release workflow
@@ -88,8 +90,6 @@ jobs:
         id: download_addon_zips
         run: |
           rm -rf ./addon_zips/
-          export ADDON="${{ steps.payload.outputs.addon }}"
-          export TAG="${{ steps.payload.outputs.tag }}"
           python3 ./tools/download_addon_zips.py repositories-config.yml
           zip_paths=$(ls ./addon_zips/*.zip)
           echo "ZIP_PATHS=$zip_paths" >> $GITHUB_OUTPUT
