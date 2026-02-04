@@ -1,19 +1,33 @@
 import os
 import sys
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
-def get_category(addon):
+def get_category_info(addon):
     parts = addon.split('.')
     if len(parts) >= 2:
         prefix = parts[0]
         subtype = parts[1]
-        if prefix == 'plugin':
-            return f"{subtype.capitalize()} Plugins"
-        elif prefix == 'script':
-            return f"{subtype.capitalize()} Scripts"
+        if prefix in ['plugin', 'script']:
+            main_type = f"{prefix.capitalize()}s"  # Plugins, Scripts
+            sub_type = f"{subtype.capitalize()} {prefix.capitalize()}s"  # Video Plugins, Module Scripts
+            return main_type, sub_type
         elif prefix == 'repository':
-            return "Repository"
-    return "Other"
+            return "Repository", "Repository"
+    return "Other", "Other"
+
+def get_description(addon_dir):
+    addon_xml = os.path.join(addon_dir, 'addon.xml')
+    if os.path.exists(addon_xml):
+        try:
+            tree = ET.parse(addon_xml)
+            root = tree.getroot()
+            desc_elem = root.find('description')
+            if desc_elem is not None:
+                return desc_elem.text or ""
+        except:
+            pass
+    return ""
 
 publish_dir = sys.argv[1] if len(sys.argv) > 1 else 'gh-pages'
 print(f"Using publish_dir: {publish_dir}")
@@ -40,37 +54,39 @@ if not os.path.exists(publish_dir):
 # Collect all addon directories
 addon_dirs = [d for d in os.listdir(publish_dir) if os.path.isdir(os.path.join(publish_dir, d)) and not d.startswith('.')]
 
-# Group by category
-addon_dict = {}
+# Group by main type and sub type
+main_dict = {}
 for addon in addon_dirs:
-    cat = get_category(addon)
-    if cat not in addon_dict:
-        addon_dict[cat] = []
-    addon_dict[cat].append(addon)
+    main_type, sub_type = get_category_info(addon)
+    if main_type not in main_dict:
+        main_dict[main_type] = {}
+    if sub_type not in main_dict[main_type]:
+        main_dict[main_type][sub_type] = []
+    main_dict[main_type][sub_type].append(addon)
 
-# Category order - collect dynamically and put Repository last
-categories = sorted(set(addon_dict.keys()))
-if "Repository" in categories:
-    categories.remove("Repository")
-    categories.append("Repository")
-if "Other" in categories:
-    categories.remove("Other")
-    categories.append("Other")
+# Main type order
+main_order = ["Plugins", "Scripts", "Repository", "Other"]
 
-# Generate HTML by category
-for cat in categories:
-    if addon_dict[cat]:
-        html += f'  <h1>{cat}</h1>\n'
-        for addon in sorted(addon_dict[cat]):
-            dir_path = os.path.join(publish_dir, addon)
-            html += f'  <h2>{addon}</h2>\n  <ul>\n'
-            for file in sorted(os.listdir(dir_path)):
-                file_path = os.path.join(dir_path, file)
-                if file.endswith('.zip'):
-                    rel_path = os.path.join(addon, file)
-                    url = f"https://repository.kodi.reavey05.com/{rel_path}"
-                    html += f'    <li><a href="{url}">{file}</a></li>\n'
-            html += '  </ul>\n'
+# Generate HTML by main type, then sub type
+for main in main_order:
+    if main in main_dict:
+        html += f'  <h1>{main}</h1>\n'
+        for sub in sorted(main_dict[main].keys()):
+            html += f'  <h2>{sub}</h2>\n'
+            for addon in sorted(main_dict[main][sub]):
+                dir_path = os.path.join(publish_dir, addon)
+                desc = get_description(dir_path)
+                html += f'  <h3>{addon}</h3>\n'
+                if desc:
+                    html += f'  <p>{desc}</p>\n'
+                html += '  <ul>\n'
+                for file in sorted(os.listdir(dir_path)):
+                    file_path = os.path.join(dir_path, file)
+                    if file.endswith('.zip'):
+                        rel_path = os.path.join(addon, file)
+                        url = f"https://repository.kodi.reavey05.com/{rel_path}"
+                        html += f'    <li><a href="{url}">{file}</a></li>\n'
+                html += '  </ul>\n'
 
 html += '''
 </body>
