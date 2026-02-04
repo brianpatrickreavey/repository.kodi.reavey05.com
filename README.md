@@ -13,8 +13,9 @@ Building out the framework to publish to GitHub Pages under repository.kodi.reav
 To add a new Kodi add-on to this repository:
 
 1. Edit `repositories-config.yml`
-2. Add your Git repository URL and configuration
-3. Commit and push - the repository will be automatically built and published
+2. Add your addon configuration with the GitHub repository details
+3. In your addon repository, set up a workflow that dispatches to this repository on releases (using `repository_dispatch` event with type `addon-release` and payload containing `addon` and `tag`)
+4. Commit and push changes to `repositories-config.yml` - the repository will be automatically rebuilt with all addons
 
 See `REPOSITORIES.md` for detailed configuration instructions.
 
