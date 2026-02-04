@@ -28,7 +28,7 @@ addons:
   script.module.auth0-ciam-client:
     repo: "brianpatrickreavey/kodi.script.module.auth0-ciam-client"
     url: "https://github.com/brianpatrickreavey/kodi.script.module.auth0-ciam-client.git"
-    branch: "main"
+    branch: "master"
 
   # Add more repositories here as needed
   # Example of adding another repository:
