@@ -16,18 +16,37 @@ def get_category_info(addon):
             return "Repository", "Repository"
     return "Other", "Other"
 
-def get_description(addon_dir):
+def get_metadata(addon_dir):
     addon_xml = os.path.join(addon_dir, 'addon.xml')
+    print(f"Checking {addon_xml}")
+    metadata = {'description': '', 'news': ''}
     if os.path.exists(addon_xml):
-        try:
-            tree = ET.parse(addon_xml)
-            root = tree.getroot()
-            desc_elem = root.find('description')
+        print(f"File exists")
+        tree = ET.parse(addon_xml)
+        root = tree.getroot()
+        print(f"Root tag: {root.tag}")
+        
+        # Find the metadata extension
+        metadata_ext = root.find('extension[@point="xbmc.addon.metadata"]')
+        if metadata_ext is not None:
+            desc_elem = metadata_ext.find('description')
             if desc_elem is not None:
-                return desc_elem.text or ""
-        except:
-            pass
-    return ""
+                metadata['description'] = desc_elem.text or ""
+                print(f"Description element found: {repr(metadata['description'])}")
+            else:
+                print("No description element in metadata extension")
+            
+            news_elem = metadata_ext.find('news')
+            if news_elem is not None:
+                metadata['news'] = news_elem.text or ""
+                print(f"News element found: {repr(metadata['news'])}")
+            else:
+                print("No news element in metadata extension")
+        else:
+            print("No metadata extension found")
+    else:
+        print("File does not exist")
+    return metadata
 
 publish_dir = sys.argv[1] if len(sys.argv) > 1 else 'gh-pages'
 print(f"Using publish_dir: {publish_dir}")
@@ -75,18 +94,21 @@ for main in main_order:
             html += f'  <h2>{sub}</h2>\n'
             for addon in sorted(main_dict[main][sub]):
                 dir_path = os.path.join(publish_dir, addon)
-                desc = get_description(dir_path)
+                metadata = get_metadata(dir_path)
+                desc = metadata['description']
+                news = metadata['news']
+                print(f"For {addon}, desc: {repr(desc)}, news: {repr(news)}")
                 html += f'  <h3>{addon}</h3>\n'
                 if desc:
-                    html += f'  <p>{desc}</p>\n'
-                html += '  <ul>\n'
+                    html += f'  <p>Description: {desc}</p>\n'
+                if news:
+                    html += f'  <p>Latest News: {news}</p>\n'
                 for file in sorted(os.listdir(dir_path)):
                     file_path = os.path.join(dir_path, file)
                     if file.endswith('.zip'):
                         rel_path = os.path.join(addon, file)
                         url = f"https://repository.kodi.reavey05.com/{rel_path}"
-                        html += f'    <li><a href="{url}">{file}</a></li>\n'
-                html += '  </ul>\n'
+                        html += f'  <p>ZIP Link: <a href="{url}">{file}</a></p>\n'
 
 html += '''
 </body>
