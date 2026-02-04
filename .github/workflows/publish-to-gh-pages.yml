@@ -91,9 +91,9 @@ jobs:
         run: |
           rm -rf ./addon_zips/
           python3 ./tools/download_addon_zips.py repositories-config.yml
-          zip_paths=$(ls ./addon_zips/*.zip)
+          zip_paths=$(ls ./addon_zips/*.zip | xargs)
           echo "ZIP_PATHS=$zip_paths" >> $GITHUB_OUTPUT
-          echo "Downloaded addon ZIPs: ${zip_paths}"
+          echo "Downloaded addon ZIPs: $zip_paths"
 
       - name: Generate Repository
         run: |
