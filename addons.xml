@@ -22,6 +22,29 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
+</addon><addon id="plugin.video.angelstudios" version="0.5.5" name="Angel Studios" provider-name="Brian Reavey, Peter Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.beautifulsoup4" version="4.12.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+    <import addon="script.module.simplecache" version="2.0.0" />
+    <import addon="script.module.inputstreamhelper" version="0.5.1" />
+    <import addon="inputstream.adaptive" version="19.0.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="resources/lib/main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.python.module" library="resources/lib/" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Angel Studios</summary>
+    <description lang="en_GB">An app providing the Angel Studios content. CURENTLY IN DEVELOPMENT.</description>
+    <disclaimer lang="en_GB">Unauthorized.  Please visit Angel Studios Website https://www.angel.com/</disclaimer>
+    <license>GPL-3.0-only	</license>
+    <assets>
+      <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
+    </assets>
+    <news>0.4.1 - bugfix: erroneous attempt to set duration on unavailable episodes resulted in episode_menu errors.  updated duration logic to be gated by episode availability.</news>
+  </extension>
 </addon><addon id="script.module.auth0-ciam-client" version="0.0.4" name="Auth0 CIAM Client" provider-name="Brian Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
