@@ -25,7 +25,7 @@ def get_metadata(addon_dir):
         tree = ET.parse(addon_xml)
         root = tree.getroot()
         print(f"Root tag: {root.tag}")
-        
+
         # Find the metadata extension
         metadata_ext = root.find('extension[@point="xbmc.addon.metadata"]')
         if metadata_ext is not None:
@@ -35,7 +35,7 @@ def get_metadata(addon_dir):
                 print(f"Description element found: {repr(metadata['description'])}")
             else:
                 print("No description element in metadata extension")
-            
+
             news_elem = metadata_ext.find('news')
             if news_elem is not None:
                 metadata['news'] = news_elem.text or ""
