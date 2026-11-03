@@ -26,6 +26,30 @@ def get_latest_release_tag(repo, headers=None):
     response.raise_for_status()
     return response.json().get('tag_name')
 
+def collect_latest_releases(addons, headers=None):
+    """Return (processing_list, missing_names) for every configured addon.
+
+    missing_names are addons with no GitHub Release. The caller must exit
+    before publishing when that list is not empty.
+    """
+    processing_list = []
+    missing = []
+    for addon_name in addons.keys():
+        repo = addons[addon_name].get('repo')
+        try:
+            tag = get_latest_release_tag(repo, headers=headers)
+        except requests.HTTPError as e:
+            print(f"Error fetching latest release for {addon_name} ({repo}): {e}", file=sys.stderr)
+            missing.append(addon_name)
+            continue
+        if not tag:
+            print(f"Error: latest release for {addon_name} ({repo}) has no tag_name.", file=sys.stderr)
+            missing.append(addon_name)
+            continue
+        print(f"Adding repo to processing list: {(addon_name, tag)}")
+        processing_list.append((addon_name, tag))
+    return processing_list, missing
+
 def download_addon_zip(repo, tag, zip_name, output_dir):
     """Download the addon ZIP from GitHub releases."""
     url = f"https://github.com/{repo}/releases/download/{tag}/{zip_name}-{tag}.zip"
@@ -64,27 +88,30 @@ if __name__ == "__main__":
         print("No addon name and tag specified.  Processing latest tag for all addons.")
         token = os.getenv('GITHUB_TOKEN')
         headers = {'Authorization': f'token {token}'} if token else {}
-        for addon_name in addons.keys():
-            repo = addons[addon_name].get('repo')
-            try:
-                tag = get_latest_release_tag(repo, headers=headers)
-            except requests.HTTPError as e:
-                print(f"Error fetching latest release for {addon_name} ({repo}): {e}", file=sys.stderr)
-                continue
-            print(f"Adding repo to processing list: {(addon_name, tag)}")
-            processing_list.append((addon_name, tag))
+        processing_list, missing = collect_latest_releases(addons, headers=headers)
+        if missing:
+            print(
+                "Refusing to publish. These addons have no GitHub Release: "
+                + ", ".join(missing),
+                file=sys.stderr,
+            )
+            sys.exit(1)
 
     output_dir = "addon_zips"
     os.makedirs(output_dir, exist_ok=True)
     zip_paths = []
     for addon_name, tag in processing_list:
         print(f"Downloading {addon_name} at tag {tag}")
-        download_path = download_addon_zip(
-            addons[addon_name].get('repo'),
-            tag,
-            addons[addon_name].get('zip_name'),
-            output_dir
-            )
+        try:
+            download_path = download_addon_zip(
+                addons[addon_name].get('repo'),
+                tag,
+                addons[addon_name].get('zip_name'),
+                output_dir
+                )
+        except requests.HTTPError as e:
+            print(f"Error downloading {addon_name} at tag {tag}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"Downloaded to {download_path}")
         zip_paths.append(download_path)
 
