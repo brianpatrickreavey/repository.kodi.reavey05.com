@@ -46,6 +46,46 @@
     </assets>
     <news>0.5.8 - Add the Log authentication steps setting. It is off by default.</news>
   </extension>
+</addon><addon id="plugin.video.crossfitwod" version="0.0.3" name="Crossfit WOD" provider-name="Brian Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.beautifulsoup4" version="4.12.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="main.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Crossfit WOD</summary>
+    <description lang="en_GB">An app providing the daily Crossfit Workout of the Day (WOD). CURENTLY IN DEVELOPMENT.</description>
+    <disclaimer lang="en_GB">Unauthorized.  Please visit Crossfit website.  https://www.crossfit.com/</disclaimer>
+    <license>GPL-3.0-only	</license>
+    <assets>
+      <icon>resources/images/icons/crossfit_logo.png</icon>
+      <fanart>resources/images/fanart/crossfit-wanderlust-group-class.jpg</fanart>
+    </assets>
+    <news>0.0.3 - First release on the reavey05 repository.</news>
+  </extension>
+</addon><addon id="plugin.video.wodi" version="0.0.3" name="WODi Application" provider-name="Brian Reavey">
+  <requires>
+    <import addon="xbmc.python" version="3.0.1" />
+    <import addon="script.module.beautifulsoup4" version="4.12.2" />
+    <import addon="script.module.requests" version="2.31.0" />
+  </requires>
+  <extension point="xbmc.python.script" library="main.py">
+      <provides>executable</provides>
+	</extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">WODi</summary>
+    <description lang="en_GB">Run Crossfit WODs from within KODI.</description>
+    <disclaimer lang="en_GB">Unauthorized.  Please visit Crossfit website.  https://www.crossfit.com/</disclaimer>
+    <license>GPL-3.0-only	</license>
+    <assets>
+      <icon>resources/images/icons/crossfit_logo.png</icon>
+      <fanart>resources/images/fanart/crossfit-wanderlust-group-class.jpg</fanart>
+    </assets>
+    <news>0.0.3 - First release on the reavey05 repository.</news>
+  </extension>
 </addon><addon id="script.module.auth0-ciam-client" version="0.0.5" name="Auth0 CIAM Client" provider-name="Brian Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
