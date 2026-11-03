@@ -22,7 +22,7 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
-</addon><addon id="plugin.video.angelstudios" version="0.5.6" name="Angel Studios" provider-name="Brian Reavey, Peter Reavey">
+</addon><addon id="plugin.video.angelstudios" version="0.5.8" name="Angel Studios" provider-name="Brian Reavey, Peter Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.beautifulsoup4" version="4.12.2" />
@@ -30,7 +30,7 @@
     <import addon="script.module.simplecache" version="2.0.0" />
     <import addon="script.module.inputstreamhelper" version="0.5.1" />
     <import addon="inputstream.adaptive" version="19.0.0" />
-    <import addon="script.module.auth0-ciam-client" version="0.0.1" />
+    <import addon="script.module.auth0-ciam-client" version="0.0.5" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="resources/lib/main.py">
     <provides>video</provides>
@@ -44,9 +44,9 @@
     <assets>
       <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
     </assets>
-    <news>0.4.1 - bugfix: erroneous attempt to set duration on unavailable episodes resulted in episode_menu errors.  updated duration logic to be gated by episode availability.</news>
+    <news>0.5.8 - Add the Log authentication steps setting. It is off by default.</news>
   </extension>
-</addon><addon id="script.module.auth0-ciam-client" version="0.0.4" name="Auth0 CIAM Client" provider-name="Brian Reavey">
+</addon><addon id="script.module.auth0-ciam-client" version="0.0.5" name="Auth0 CIAM Client" provider-name="Brian Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.requests" version="2.0.0" />
@@ -59,6 +59,6 @@
     <license>GPL-3.0-only</license>
     <platform>all</platform>
     <source>https://github.com/brianpatrickreavey/kodi.script.module.auth0-ciam-client</source>
-    <news>0.0.1 - Initial release bundling auth0_ciam_client library.</news>
+    <news>0.0.5 - Bundle auth0-ciam-client v0.2.2, which reads the angel_jwt_v3 cookie.</news>
   </extension>
 </addon></addons>
