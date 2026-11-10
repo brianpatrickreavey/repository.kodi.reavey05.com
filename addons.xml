@@ -22,7 +22,7 @@
         <source>https://github.com/brianpatrickreavey/repository.kodi.reavey05.com</source>
         <email>brian at reavey05 dot com</email>
     </extension>
-</addon><addon id="plugin.video.angelstudios" version="0.7.0" name="Angel Studios" provider-name="Brian Reavey, Peter Reavey">
+</addon><addon id="plugin.video.angelstudios" version="0.8.0" name="Angel Studios" provider-name="Brian Reavey, Peter Reavey">
   <requires>
     <import addon="xbmc.python" version="3.0.1" />
     <import addon="script.module.beautifulsoup4" version="4.12.2" />
@@ -44,7 +44,7 @@
     <assets>
       <icon>resources/images/icons/Angel_Studios_Logo.png</icon>
     </assets>
-    <news>0.7.0 - Revoke the Angel session on logout</news>
+    <news>0.8.0 - Show the watch-page title tags on movies, series, and specials.</news>
   </extension>
 </addon><addon id="plugin.video.crossfitwod" version="0.0.3" name="Crossfit WOD" provider-name="Brian Reavey">
   <requires>
